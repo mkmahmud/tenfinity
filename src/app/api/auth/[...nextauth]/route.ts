@@ -2,6 +2,14 @@ import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
 
+import { Session } from "next-auth";
+
+declare module "next-auth" {
+  interface Session {
+    accessToken?: string;
+  }
+}
+
 const handler = NextAuth({
   providers: [
     GoogleProvider({
@@ -49,7 +57,9 @@ const handler = NextAuth({
 
     async session({ session, token }) {
       // forward token info into session object
-      session.accessToken = token.accessToken;
+      if (token.accessToken) {
+        session.accessToken = token.accessToken as string;
+      }
       return session;
     },
   },

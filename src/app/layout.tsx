@@ -1,14 +1,12 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Rubik } from "next/font/google";
 import "./globals.css";
+import ReduxWrapper from "@/lib/redux/ReduxWrapper";
+import SessionProviderWrapper from "@/lib/SessionProviderWrapper";
+import SessionWatcher from "@/lib/sessionmatcher";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const rubik = Rubik({
+  variable: "--font-rubik",
   subsets: ["latin"],
 });
 
@@ -23,11 +21,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${rubik.variable}   antialiased`}>
+        <SessionProviderWrapper>
+          <ReduxWrapper>
+            {children} <SessionWatcher />{" "}
+          </ReduxWrapper>
+        </SessionProviderWrapper>
       </body>
     </html>
   );

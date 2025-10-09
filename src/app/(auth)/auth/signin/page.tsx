@@ -15,6 +15,7 @@ export default function SignIn() {
   const handleGoogleSignIn = () => {
     signIn("google", { callbackUrl: "/" });
   };
+  
   return (
     <main className="bg-primary flex min-h-screen flex-col items-center justify-center bg-gray-50">
       <div className="bg-secondary p-8 rounded-lg shadow-md w-full max-w-md">

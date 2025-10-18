@@ -2,7 +2,6 @@ import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
 
-import { Session } from "next-auth";
 
 declare module "next-auth" {
   interface Session {
@@ -24,8 +23,8 @@ const handler = NextAuth({
 
   callbacks: {
     // This gets called after successful OAuth
-    async signIn({ user, account, profile }) {
-      try { 
+    async signIn() {
+      try {
         // send user data to backend API
         // await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/social-login`, {
         //   method: "POST",
@@ -46,12 +45,12 @@ const handler = NextAuth({
       }
     },
 
-    async jwt({ token, account, user }) {
+    async jwt({ token, account }) {
       // attach provider info to JWT token
       if (account) {
         token.accessToken = account.access_token;
-        }
-        console.log("JWT Token:", token);
+      }
+      console.log("JWT Token:", token);
       return token;
     },
 

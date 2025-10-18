@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FaFacebook, FaGoogle } from "react-icons/fa";
+ 
 
 export default function SignUp() {
   return (

@@ -12,50 +12,7 @@ export const menus = [
     path: "/shop",
     icon: "Store",
     iconPosition: "left",
-    dropDown: [
-      {
-        label: "All Products",
-        path: "/shop",
-        icon: "Basket",
-      },
-      {
-        label: "Categories",
-        path: "/categories",
-        icon: "Grid",
-        dropDown: [
-          {
-            label: "Sarees",
-            path: "/shop/sarees",
-            icon: "Tshirt",
-          },
-          {
-            label: "Three-Pieces",
-            path: "/shop/three-pieces",
-            icon: "Dress",
-          },
-          {
-            label: "Two-Pieces",
-            path: "/shop/two-pieces",
-            icon: "Shirt",
-          },
-          {
-            label: "Accessories",
-            path: "/shop/accessories",
-            icon: "Necklace",
-          },
-        ],
-      },
-      {
-        label: "New Arrivals",
-        path: "/shop/new-arrivals",
-        icon: "Tag",
-      },
-      {
-        label: "On Sale",
-        path: "/shop/sale",
-        icon: "Discount",
-      },
-    ],
+
   },
   {
     label: "Collections",

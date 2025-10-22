@@ -1,14 +1,9 @@
-import type { Metadata } from "next";
-import { Rubik } from "next/font/google";
+import type { Metadata } from "next"; 
 import "./globals.css";
 import ReduxWrapper from "@/lib/redux/ReduxWrapper";
 import SessionProviderWrapper from "@/lib/SessionProviderWrapper";
 import SessionWatcher from "@/lib/sessionmatcher";
-
-const rubik = Rubik({
-  variable: "--font-rubik",
-  subsets: ["latin"],
-});
+ 
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -22,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${rubik.variable}   antialiased`}>
+      <body>
         <SessionProviderWrapper>
           <ReduxWrapper>
             {children} <SessionWatcher />{" "}

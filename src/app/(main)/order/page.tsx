@@ -13,24 +13,7 @@ type CartItem = {
 };
 
 export default function OrderConfirmPage() {
-    const [items] = useState<CartItem[]>([
-        {
-            id: "sku-001",
-            title: "Recycled Cotton Tee",
-            color: "Midnight",
-            size: "M",
-            qty: 1,
-            price: 34.0,
-        },
-        {
-            id: "sku-002",
-            title: "Tailored Denim Jacket",
-            color: "Indigo",
-            size: "L",
-            qty: 1,
-            price: 129.0,
-        },
-    ]);
+    const [items] = useState<CartItem[]>([]);
 
     const [fullName, setFullName] = useState("");
     const [email, setEmail] = useState("");
@@ -264,8 +247,8 @@ export default function OrderConfirmPage() {
                                 {isSubmitting
                                     ? "Processing..."
                                     : orderConfirmed
-                                    ? "Order Confirmed"
-                                    : `Confirm Order • $${total.toFixed(2)}`}
+                                        ? "Order Confirmed"
+                                        : `Confirm Order • $${total.toFixed(2)}`}
                             </button>
 
                             <button

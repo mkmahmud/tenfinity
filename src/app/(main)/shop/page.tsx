@@ -1,4 +1,6 @@
 "use client";
+import { addToCartLocalStorage } from "@/lib/cartUtils";
+import { useCartCount } from "@/utills/totalCartItems";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useMemo, useState } from "react";
@@ -28,7 +30,7 @@ const PRODUCTS: Product[] = [
             { name: "Teal", className: "bg-teal-500" },
         ],
         image:
-            "images/1.jpg",
+            "/images/1.jpg",
     },
     {
         id: "nimbus",
@@ -42,7 +44,7 @@ const PRODUCTS: Product[] = [
             { name: "White", className: "bg-white border" },
         ],
         image:
-            "images/2.jpg",
+            "/images/2.jpg",
     },
     {
         id: "nimbus",
@@ -56,7 +58,7 @@ const PRODUCTS: Product[] = [
             { name: "White", className: "bg-white border" },
         ],
         image:
-            "images/3.jpg",
+            "/images/3.jpg",
     },
     {
         id: "nimbus",
@@ -70,7 +72,7 @@ const PRODUCTS: Product[] = [
             { name: "White", className: "bg-white border" },
         ],
         image:
-            "images/4.jpg",
+            "/images/4.jpg",
     },
     {
         id: "lumen",
@@ -83,7 +85,7 @@ const PRODUCTS: Product[] = [
             { name: "White", className: "bg-white border" },
         ],
         image:
-            "images/5.jpg",
+            "/images/5.jpg",
     }
 
 ];
@@ -91,15 +93,14 @@ const PRODUCTS: Product[] = [
 export default function Shop() {
     const [query, setQuery] = useState("");
     const [favorites, setFavorites] = useState<Record<string, boolean>>({});
-    const [cart, setCart] = useState<Record<string, number>>({});
-    const [qtys, setQtys] = useState<Record<string, number>>(
+     const [qtys, setQtys] = useState<Record<string, number>>(
         PRODUCTS.reduce((acc, p) => {
             acc[p.id] = 1;
             return acc;
         }, {} as Record<string, number>)
     );
     const [selectedColor, setSelectedColor] = useState<Record<string, string>>({});
-    const [justAdded, setJustAdded] = useState<string | null>(null);
+    const [justAdded] = useState<string | null>(null);
 
     const filtered = useMemo(() => {
         const q = query.trim().toLowerCase();
@@ -108,8 +109,7 @@ export default function Shop() {
             (p) => p.title.toLowerCase().includes(q) || p.description.toLowerCase().includes(q)
         );
     }, [query]);
-
-    const totalItems = Object.values(cart).reduce((s, v) => s + v, 0);
+ 
 
     function toggleFavorite(id: string) {
         setFavorites((prev) => ({ ...prev, [id]: !prev[id] }));
@@ -119,15 +119,17 @@ export default function Shop() {
         setQtys((prev) => ({ ...prev, [id]: Math.max(1, value) }));
     }
 
-    function addToCart(id: string) {
-        setCart((prev) => ({ ...prev, [id]: (prev[id] ?? 0) + (qtys[id] ?? 1) }));
-        setJustAdded(id);
-        setTimeout(() => setJustAdded(null), 1400);
+    function addToCart(product: Product) {
+
+        addToCartLocalStorage({ id: product.id, name: product.title, price: product.price, image: product.image })
     }
 
     function selectColor(id: string, colorName: string) {
         setSelectedColor((prev) => ({ ...prev, [id]: colorName }));
     }
+
+    // Total Cart Items
+    const count = useCartCount();
 
     return (
         <section className="min-h-screen bg-gray-50 py-12 px-6">
@@ -148,34 +150,36 @@ export default function Shop() {
                             className="flex-1 sm:flex-none w-full sm:w-64 px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
                             placeholder="Search products..."
                         />
-                        <button
+                        <Link href="/cart"
                             className="inline-flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg shadow hover:bg-indigo-700 transition"
                             title="View cart"
                             type="button"
                         >
                             View Cart
                             <span className="inline-flex items-center justify-center bg-white text-indigo-600 rounded-full w-6 h-6 text-xs font-semibold">
-                                {totalItems}
+                                {count}
                             </span>
-                        </button>
+                        </Link>
                     </div>
                 </header>
 
                 <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-                    {filtered.map((p) => {
+                    {filtered.map((p, index) => {
                         const fav = !!favorites[p.id];
                         const qty = qtys[p.id] ?? 1;
                         const color = selectedColor[p.id] ?? p.colors?.[0]?.name ?? "";
                         return (
                             <article
-                                key={p.id}
+                                key={index}
                                 className="relative bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition transform hover:-translate-y-1"
                             >
                                 <div className="relative">
                                     <Image
                                         className="w-full h-56 object-cover transition-transform duration-500 hover:scale-105"
-                                        src={p.image}
+                                        src={p?.image}
                                         alt={p.title}
+                                        height={50}
+                                        width={50}
                                         loading="lazy"
                                     />
                                     <button
@@ -276,7 +280,7 @@ export default function Shop() {
 
                                     <div className="flex items-center gap-2">
                                         <button
-                                            onClick={() => addToCart(p.id)}
+                                            onClick={() => addToCart(p)}
                                             className="inline-flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg shadow hover:bg-indigo-700 transition"
                                             type="button"
                                         >

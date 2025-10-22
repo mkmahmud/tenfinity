@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 type Item = {
     id: number;
     name: string;
@@ -111,7 +113,9 @@ export default function Testimonial() {
 
                         <div className="mt-6 flex items-center justify-between">
                             <div className="flex items-center gap-3">
-                                <img
+                                <Image
+                                    height={48}
+                                    width={48}
                                     src={t.avatar}
                                     alt={`${t.name} avatar`}
                                     className="w-12 h-12 rounded-full object-cover border border-gray-100"

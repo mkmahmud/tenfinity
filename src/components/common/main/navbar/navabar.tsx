@@ -5,7 +5,7 @@ import Image from "next/image";
 import {
   NavigationMenu,
   NavigationMenuItem,
-  NavigationMenuLink,
+  
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 
@@ -56,11 +56,10 @@ export default function Navbar() {
                       </HoverCardContent>
                     </HoverCard>
                   ) : (
-                    <Link href={menu.path}>
-                      <NavigationMenuLink className="hover:bg-secondary cursor-pointer flex items-center gap-2 px-3 py-2 hover:text-primary transition rounded-md">
-                        {menu.label}
-                      </NavigationMenuLink>
+                    <Link href={menu.path} className="hover:bg-secondary cursor-pointer flex items-center gap-2 px-3 py-2 hover:text-primary transition rounded-md">
+                      {menu.label}
                     </Link>
+
                   )}
                 </NavigationMenuItem>
               ))}

@@ -108,6 +108,8 @@ export default function ProductDetailsPage() {
                         <div className="relative group">
                             <Image
                                 src={product.images[imgIndex]}
+                                height={50}
+                                width={50}
                                 alt={`${product.name} - view ${imgIndex + 1}`}
                                 className="w-full h-[480px] object-cover rounded-xl transition-transform duration-300 transform group-hover:scale-105"
                                 draggable={false}
@@ -138,7 +140,8 @@ export default function ProductDetailsPage() {
                                     className={`w-20 h-20 rounded-md overflow-hidden border-2 ${i === imgIndex ? 'border-indigo-500' : 'border-transparent'
                                         } focus:outline-none`}
                                 >
-                                    <Image src={img} alt={`thumb-${i}`} className="w-full h-full object-cover" draggable={false} />
+                                    <Image src={img} alt={`thumb-${i}`} className="w-full h-full object-cover" draggable={false}   height={50}
+                                        width={50} />
                                 </button>
                             ))}
                         </div>
@@ -154,7 +157,8 @@ export default function ProductDetailsPage() {
                                         style={{ scrollSnapAlign: 'start' }}
                                     >
                                         <div className="h-28 bg-white rounded-md mb-3 overflow-hidden flex items-center justify-center">
-                                            <Image src={`/images/${n}.jpg`} alt={`related-${n}`} className="object-cover h-full" />
+                                            <Image src={`/images/${n}.jpg`} alt={`related-${n}`} className="object-cover h-full" height={50}
+                                                width={50} />
                                         </div>
                                         <div className="text-sm font-medium">Essential Tee</div>
                                         <div className="text-xs text-gray-500">$39</div>
